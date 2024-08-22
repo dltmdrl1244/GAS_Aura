@@ -18,6 +18,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetWidgetController(UObject* InWidgetController);
 
+	// 데이터를 얻어올 수 있는, 인터페이스 역할을 할 Widget Controller
 	UPROPERTY(BlueprintReadOnly)
 	TObjectPtr<UObject> WidgetController;
 

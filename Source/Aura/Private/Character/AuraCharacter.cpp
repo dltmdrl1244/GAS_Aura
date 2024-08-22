@@ -4,7 +4,9 @@
 #include "Character/AuraCharacter.h"
 #include "AbilitySystemComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Player/AuraPlayerController.h"
 #include "Player/AuraPlayerState.h"
+#include "UI/HUD/AuraHUD.h"
 
 AAuraCharacter::AAuraCharacter()
 {
@@ -39,4 +41,14 @@ void AAuraCharacter::InitAbilityActorInfo()
     AuraPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(AuraPlayerState, this);
     AbilitySystemComponent = AuraPlayerState->GetAbilitySystemComponent();
     AttributeSet = AuraPlayerState->GetAttributeSet();
+
+	// 이 캐릭터의 어트리뷰트와 바인딩될 overlay widget을 만들고, 뷰포트에 띄운다.
+	// 그 결과 각각의 캐릭터는 각각의 캐릭터에서 이 부분을 수행하고, 즉 자신의 캐릭터 상황에 맞는 overlay HUD를 갖게 된다.
+	if (AAuraPlayerController* AuraPlayerController = Cast<AAuraPlayerController>(GetController()))
+	{
+		if (AAuraHUD* AuraHUD = Cast<AAuraHUD>(AuraPlayerController->GetHUD()))
+		{
+			AuraHUD->InitOverlay(AuraPlayerController, AuraPlayerState, AbilitySystemComponent, AttributeSet);
+		}
+	}
 }
