@@ -43,7 +43,8 @@ class AURA_API UAuraWidgetController : public UObject
 public:
 	UFUNCTION(BlueprintCallable)
 	void SetWidgetControllerParams(const FWidgetControllerParams& WCParams);
-
+	virtual void BroadcastInitialValues();
+	
 protected:
 	// WidgetController에서 필요한 4가지 데이터 소스 종류. SetWidgetControllerParams() 에서 set 된다.
 	UPROPERTY(BlueprintReadOnly, Category = WidgetController)

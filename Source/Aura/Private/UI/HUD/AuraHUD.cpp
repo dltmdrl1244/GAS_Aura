@@ -31,5 +31,6 @@ void AAuraHUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySyst
 	UOverlayWidgetController* WidgetController = GetOverlayWidgetController(WidgetControllerParams);
 	// 위젯 -> 컨트롤러 방향의 의존성을 만들어 준다. (위젯은 접근할 컨트롤러를 갖고 있어야 한다)
 	OverlayWidget->SetWidgetController(WidgetController);
+	WidgetController->BroadcastInitialValues();
 	OverlayWidget->AddToViewport();
 }
