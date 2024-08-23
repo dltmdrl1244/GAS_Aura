@@ -44,6 +44,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetWidgetControllerParams(const FWidgetControllerParams& WCParams);
 	virtual void BroadcastInitialValues();
+	virtual void BindCallbacksToDependencies();
 	
 protected:
 	// WidgetController에서 필요한 4가지 데이터 소스 종류. SetWidgetControllerParams() 에서 set 된다.
