@@ -3,6 +3,7 @@
 
 #include "Character/AuraCharacter.h"
 #include "AbilitySystemComponent.h"
+#include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Player/AuraPlayerController.h"
 #include "Player/AuraPlayerState.h"
@@ -39,7 +40,8 @@ void AAuraCharacter::InitAbilityActorInfo()
 	AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
     check(AuraPlayerState);
     AuraPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(AuraPlayerState, this);
-    AbilitySystemComponent = AuraPlayerState->GetAbilitySystemComponent();
+	Cast<UAuraAbilitySystemComponent>(AuraPlayerState->GetAbilitySystemComponent())->AbilityActorInfoSet();
+	AbilitySystemComponent = AuraPlayerState->GetAbilitySystemComponent();
     AttributeSet = AuraPlayerState->GetAttributeSet();
 
 	// 이 캐릭터의 어트리뷰트와 바인딩될 overlay widget을 만들고, 뷰포트에 띄운다.
