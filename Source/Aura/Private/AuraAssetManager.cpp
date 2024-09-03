@@ -13,5 +13,5 @@ void UAuraAssetManager::StartInitialLoading()
 UAuraAssetManager& UAuraAssetManager::Get()
 {
 	check(GEngine);
-	return *Cast<UAuraAssetManager>(GEngine->AssetManager);;
+	return *Cast<UAuraAssetManager>(GEngine->AssetManager);
 }
