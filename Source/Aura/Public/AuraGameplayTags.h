@@ -30,6 +30,13 @@ public:
  FGameplayTag Attributes_Secondary_ManaRegeneration;
  FGameplayTag Attributes_Secondary_MaxHealth;
  FGameplayTag Attributes_Secondary_MaxMana;
+
+ FGameplayTag InputTag_LMB;
+ FGameplayTag InputTag_RMB;
+ FGameplayTag InputTag_Q;
+ FGameplayTag InputTag_W;
+ FGameplayTag InputTag_E;
+ FGameplayTag InputTag_R;
  
 private:
  // Singleton instance
