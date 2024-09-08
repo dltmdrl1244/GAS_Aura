@@ -71,16 +71,17 @@ void AAuraPlayerController::CursorTrace()
 
 void AAuraPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 {
+	bTargeting = ThisActor != nullptr ? true : false;
+	
 	if (InputTag.MatchesTagExact(FAuraGameplayTags::Get().InputTag_RMB))
 	{
-		bTargeting = ThisActor ? true : false;
 		bAutoRunning = false;
 	}
 }
 
 void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 {
-	if (bTargeting)
+	if (InputTag.MatchesTagExact(FAuraGameplayTags::Get().InputTag_LMB) && bTargeting)
 	{
 		if (GetASC())
 		{
@@ -89,15 +90,7 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 		return;
 	}
 	
-	if (!InputTag.MatchesTagExact(FAuraGameplayTags::Get().InputTag_RMB))
-	{
-		if (GetASC())
-		{
-			GetASC()->AbilityInputTagHeld(InputTag);
-		}
-		return;
-	}
-	else
+	if (InputTag.MatchesTagExact(FAuraGameplayTags::Get().InputTag_RMB) && !bTargeting)
 	{
 		APawn* ControlledPawn = GetPawn();
 		if (FollowTime <= ShortPressThreshold && ControlledPawn)
@@ -115,12 +108,22 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 		}
 		FollowTime = 0.f;
 		bTargeting = false;
+		return;
+	}
+
+	// else
+	if (false)
+	{
+		if (GetASC())
+		{
+			GetASC()->AbilityInputTagReleased(InputTag);
+		}
 	}
 }
 
 void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 {
-	if (bTargeting)
+	if (InputTag.MatchesTagExact(FAuraGameplayTags::Get().InputTag_LMB) && bTargeting)
 	{
 		if (GetASC())
 		{
@@ -129,15 +132,7 @@ void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 		return;
 	}
 	
-	if (!InputTag.MatchesTagExact(FAuraGameplayTags::Get().InputTag_RMB))
-	{
-		if (GetASC())
-		{
-			GetASC()->AbilityInputTagHeld(InputTag);
-		}
-		return;
-	}
-	else // Holding MouseButton Down
+	if (InputTag.MatchesTagExact(FAuraGameplayTags::Get().InputTag_RMB) && !bTargeting) // Holding MouseButton Down
 	{
 		FollowTime += GetWorld()->GetDeltaSeconds();
 
@@ -149,6 +144,20 @@ void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 		{
 			const FVector WorldDirection = (CachedDestination - ControlledPawn->GetActorLocation()).GetSafeNormal();
 			ControlledPawn->AddMovementInput(WorldDirection);
+		}
+		if (GetASC())
+		{
+			GetASC()->AbilityInputTagHeld(InputTag);
+		}
+		return;
+	}
+
+	// else
+	if (false)
+	{
+		if (GetASC())
+		{
+			GetASC()->AbilityInputTagHeld(InputTag);
 		}
 	}
 }
