@@ -66,4 +66,7 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USplineComponent> Spline;
 	void AutoRun();
+
+public:
+	FORCEINLINE FHitResult GetCursorHit() const {return CursorHit;}
 };
