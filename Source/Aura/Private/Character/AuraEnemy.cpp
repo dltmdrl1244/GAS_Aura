@@ -9,6 +9,8 @@
 
 AAuraEnemy::AAuraEnemy()
 {
+	PrimaryActorTick.bCanEverTick = true;
+
 	GetMesh()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
 
 	AbilitySystemComponent = CreateDefaultSubobject<UAuraAbilitySystemComponent>("AbilitySystemComponent");
