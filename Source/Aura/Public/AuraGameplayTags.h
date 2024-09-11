@@ -37,6 +37,8 @@ public:
  FGameplayTag InputTag_W;
  FGameplayTag InputTag_E;
  FGameplayTag InputTag_R;
+
+ FGameplayTag Damage;
  
 private:
  // Singleton instance
