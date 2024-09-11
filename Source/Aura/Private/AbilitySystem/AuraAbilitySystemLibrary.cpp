@@ -3,6 +3,8 @@
 
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
+#include "AbilitySystem/Data/CharacterClassInfo.h"
+#include "Game/AuraGameModeBase.h"
 #include "Kismet/GameplayStatics.h"
 #include "Player/AuraPlayerState.h"
 #include "UI/HUD/AuraHUD.h"
@@ -40,5 +42,33 @@ UAttributeMenuWidgetController* UAuraAbilitySystemLibrary::GetAttributeMenuWidge
 		}
 	}
 	return nullptr;
+}
+
+void UAuraAbilitySystemLibrary::InitializeDefaultAttributes(const UObject* WorldContextObject, ECharacterClass CharacterClass, float Level, UAbilitySystemComponent* ASC)
+{
+	if (AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(WorldContextObject)))
+	{
+		AActor* AvatarActor = ASC->GetAvatarActor();
+		check(AuraGameMode->CharacterClassInfo);
+		const FCharacterClassDefaultInfo ClassDefaultInfo = AuraGameMode->CharacterClassInfo->GetClassDefaultInfo(CharacterClass);
+
+		// Set Primary Attribute
+		FGameplayEffectContextHandle PrimaryAttributesContextHandle = ASC->MakeEffectContext();
+		PrimaryAttributesContextHandle.AddSourceObject(AvatarActor);
+		const FGameplayEffectSpecHandle PrimaryAttributesSpecHandle = ASC->MakeOutgoingSpec(ClassDefaultInfo.PrimaryAttributes, Level, PrimaryAttributesContextHandle);
+		ASC->ApplyGameplayEffectSpecToSelf(*PrimaryAttributesSpecHandle.Data.Get());
+
+		// Set Secondary Attribute
+		FGameplayEffectContextHandle SecondaryAttributesContextHandle = ASC->MakeEffectContext();
+		SecondaryAttributesContextHandle.AddSourceObject(AvatarActor);
+		const FGameplayEffectSpecHandle SecondaryAttributesSpecHandle = ASC->MakeOutgoingSpec(AuraGameMode->CharacterClassInfo->SecondaryAttributes, Level, SecondaryAttributesContextHandle);
+		ASC->ApplyGameplayEffectSpecToSelf(*SecondaryAttributesSpecHandle.Data.Get());
+
+		// Set Vital Attribute
+		FGameplayEffectContextHandle VitalAttributesContextHandle = ASC->MakeEffectContext();
+		VitalAttributesContextHandle.AddSourceObject(AvatarActor);
+		const FGameplayEffectSpecHandle VitalAttributesSpecHandle = ASC->MakeOutgoingSpec(AuraGameMode->CharacterClassInfo->VitalAttributes, Level, VitalAttributesContextHandle);
+		ASC->ApplyGameplayEffectSpecToSelf(*VitalAttributesSpecHandle.Data.Get());
+	}
 }
 

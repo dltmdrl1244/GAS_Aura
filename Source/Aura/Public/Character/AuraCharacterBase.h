@@ -51,7 +51,7 @@ protected:
 	TSubclassOf<UGameplayEffect> DefaultVitalAttributes;
 
 	void ApplyEffectToSelf(const TSubclassOf<UGameplayEffect>& Attributes, const float Level) const;
-	void InitializeDefaultAttributes() const;
+	virtual void InitializeDefaultAttributes() const;
 	void AddCharacterAbilities();
 	
 private:
