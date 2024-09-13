@@ -6,7 +6,9 @@
 #include "Engine/DataAsset.h"
 #include "CharacterClassInfo.generated.h"
 
+class UGameplayAbility;
 class UGameplayEffect;
+
 // 캐릭터 타입을 정의
 UENUM(BlueprintType)
 enum class ECharacterClass : uint8
@@ -41,6 +43,10 @@ public:
 	TSubclassOf<UGameplayEffect> SecondaryAttributes;
 	UPROPERTY(EditDefaultsOnly, Category = "Class Common Defaults")
 	TSubclassOf<UGameplayEffect> VitalAttributes;
+	// 모든 캐릭터들이 공통으로 가지고 있는 gameplay ability
+	// AuraAbilitySystemLibrary-> OOO 에서 실행
+	UPROPERTY(EditDefaultsOnly, Category = "Class Common Defaults")
+	TArray<TSubclassOf<UGameplayAbility>> CommonAbilities;
 
 	FCharacterClassDefaultInfo GetClassDefaultInfo(ECharacterClass CharacterClass);
 };

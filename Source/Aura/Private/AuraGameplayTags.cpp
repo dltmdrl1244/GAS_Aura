@@ -99,28 +99,32 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		FString("Input Tag for Right Mouse Button")
 		);
 
-	GameplayTags.InputTag_Q = UGameplayTagsManager::Get().AddNativeGameplayTag(
-		FName("InputTag.Q"),
-		FString("Input Tag for Q key")
+	GameplayTags.InputTag_1 = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("InputTag.1"),
+		FString("Input Tag for 1 key")
 		);
 
-	GameplayTags.InputTag_W = UGameplayTagsManager::Get().AddNativeGameplayTag(
-		FName("InputTag.W"),
-		FString("Input Tag for W key")
+	GameplayTags.InputTag_2 = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("InputTag.2"),
+		FString("Input Tag for 2 key")
 		);
 
-	GameplayTags.InputTag_E = UGameplayTagsManager::Get().AddNativeGameplayTag(
-		FName("InputTag.E"),
-		FString("Input Tag for E key")
+	GameplayTags.InputTag_3 = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("InputTag.3"),
+		FString("Input Tag for 3 key")
 		);
 
-	GameplayTags.InputTag_R = UGameplayTagsManager::Get().AddNativeGameplayTag(
-		FName("InputTag.R"),
-		FString("Input Tag for R key")
+	GameplayTags.InputTag_4 = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("InputTag.4"),
+		FString("Input Tag for 4 key")
 		);
 	
 	GameplayTags.Damage = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Damage"),
 		FString("Damage")
+		);
+	GameplayTags.Effects_HitReact = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Effects.HitReact"),
+		FString("Hit React")
 		);
 }

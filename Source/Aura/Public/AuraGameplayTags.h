@@ -33,12 +33,14 @@ public:
 
  FGameplayTag InputTag_LMB;
  FGameplayTag InputTag_RMB;
- FGameplayTag InputTag_Q;
- FGameplayTag InputTag_W;
- FGameplayTag InputTag_E;
- FGameplayTag InputTag_R;
+ FGameplayTag InputTag_1;
+ FGameplayTag InputTag_2;
+ FGameplayTag InputTag_3;
+ FGameplayTag InputTag_4;
 
  FGameplayTag Damage;
+
+ FGameplayTag Effects_HitReact;
  
 private:
  // Singleton instance
