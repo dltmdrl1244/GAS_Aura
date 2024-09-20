@@ -3,6 +3,7 @@
 
 #include "AbilitySystem/ExecCalc/ExecCalcDamage.h"
 #include "AbilitySystemComponent.h"
+#include "AuraAbilityTypes.h"
 #include "AuraGameplayTags.h"
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "AbilitySystem/Data/CharacterClassInfo.h"
@@ -43,8 +44,13 @@ void UExecCalcDamage::Execute_Implementation(const FGameplayEffectCustomExecutio
 	TargetBlockChance = FMath::Max<float>(TargetBlockChance, 0.f);
 
 	// if block, half damage
-	Damage = FMath::RandRange(1, 100) < TargetBlockChance ? Damage / 2.f : Damage;
-
+	const bool bBlocked = FMath::RandRange(1, 100) < TargetBlockChance;
+	Damage = bBlocked ? Damage / 2.f : Damage;
+	
+	// Custom Effect Context에서 새로 만든 bBlockedHit에 값 할당
+	FGameplayEffectContextHandle EffectContextHandle = Spec.GetContext();
+	UAuraAbilitySystemLibrary::SetIsBlockedHit(EffectContextHandle, bBlocked);
+	
 	// Armor ignores a percentage of Target's armor
 	float TargetArmor = 0.f;
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(DamageStatics().ArmorDef, EvalParam, TargetArmor);
@@ -68,7 +74,7 @@ void UExecCalcDamage::Execute_Implementation(const FGameplayEffectCustomExecutio
 	float SourceCriticalHitChance = 0.f;
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(DamageStatics().CriticalHitChanceDef, EvalParam, SourceCriticalHitChance);
 	SourceCriticalHitChance = FMath::Max<float>(SourceCriticalHitChance, 0.f);
-
+	
 	float TargetCriticalHitResistance = 0.f;
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(DamageStatics().CriticalHitResistanceDef, EvalParam, TargetCriticalHitResistance);
 	TargetCriticalHitResistance = FMath::Max<float>(TargetCriticalHitResistance, 0.f);
@@ -82,8 +88,12 @@ void UExecCalcDamage::Execute_Implementation(const FGameplayEffectCustomExecutio
 
 	// Critical Hit Resistance reduces Critical Hit Chance by a certain percentage
 	const float EffectiveCriticalHitChance = SourceCriticalHitChance - TargetCriticalHitResistance * CriticalHitResistanceCoefficient;
-	const bool bCriticalHit = FMath::RandRange(1, 100) < EffectiveCriticalHitChance;
+	// const bool bCriticalHit = FMath::RandRange(1, 100) < EffectiveCriticalHitChance;
+	const bool bCriticalHit = FMath::RandRange(1, 100) < SourceCriticalHitChance;
 
+	// Custom Effect Context에서 새로 만든 bIsCriticalHit에 값 할당
+	UAuraAbilitySystemLibrary::SetIsCriticalHit(EffectContextHandle, bCriticalHit);
+	
 	// Double damage plus a bonus if critical hit
 	Damage = bCriticalHit ? 2.f * Damage + SourceCriticalHitDamage : Damage;
 	

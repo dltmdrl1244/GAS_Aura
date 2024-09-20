@@ -6,6 +6,7 @@
 #include "AuraGameplayTags.h"
 #include "GameFramework/Character.h"
 #include "GameplayEffectExtension.h"
+#include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "Interaction/CombatInterface.h"
 #include "Kismet/GameplayStatics.h"
 #include "Net/UnrealNetwork.h"
@@ -107,11 +108,13 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 					CombatInterface->Die();
 				}
 			}
-
+			
+			const bool bBlock = UAuraAbilitySystemLibrary::IsBlockedHit(Props.EffectContextHandle);
+			const bool bCritical = UAuraAbilitySystemLibrary::IsCriticalHit(Props.EffectContextHandle);
 			// Show Floating DamageText Widget
 			if (AAuraPlayerController* AuraPC = Cast<AAuraPlayerController>(Props.SourceController))
 			{
-				AuraPC->ClientShowDamageText(LocalIncomingDamage, Props.TargetCharacter);
+				AuraPC->ClientShowDamageText(LocalIncomingDamage, Props.TargetCharacter, bBlock, bCritical);
 			}
 		}
 	}
