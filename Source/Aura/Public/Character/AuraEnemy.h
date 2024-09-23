@@ -7,6 +7,7 @@
 #include "Interaction/HighlightInterface.h"
 #include "UI/WidgetController/OverlayWidgetController.h"
 #include "AbilitySystem/Data/CharacterClassInfo.h"
+#include "Interaction/EnemyCombatInterface.h"
 #include "AuraEnemy.generated.h"
 
 class UWidgetComponent;
@@ -16,7 +17,7 @@ class AAuraAIController;
  * 
  */
 UCLASS()
-class AURA_API AAuraEnemy : public AAuraCharacterBase, public IHighlightInterface
+class AURA_API AAuraEnemy : public AAuraCharacterBase, public IHighlightInterface, public IEnemyCombatInterface
 {
 	GENERATED_BODY()
 	
@@ -34,6 +35,10 @@ public:
 	virtual void Die() override;
 	/* End Combat Interface */
 
+	/* Enemy Combat Interface */
+	virtual void SetCombatTarget_Implementation(AActor* InCombatTarget) override;
+	virtual AActor* GetCombatTarget_Implementation() const override;
+	/* End Enemy Combat Interface */
 	UPROPERTY(BlueprintAssignable)
 	FOnAttributeChangedSignature OnHealthChanged;
 	UPROPERTY(BlueprintAssignable)
@@ -46,6 +51,8 @@ public:
 	float BaseWalkSpeed = 250.f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
 	float LifeSpan = 5.f;
+	UPROPERTY(BlueprintReadWrite, Category = "Combat")
+	TObjectPtr<AActor> CombatTarget;
 	
 protected:
 	virtual void BeginPlay() override;
