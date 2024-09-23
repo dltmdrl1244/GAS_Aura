@@ -9,7 +9,7 @@
 #include "Interaction/CombatInterface.h"
 #include "Aura/Public/AuraGameplayTags.h"
 
-void UAuraProjectileSpell::SpawnProjectileSpell(const FVector& ProjectileTargetLocation)
+void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocation)
 {
 	const bool bIsServer = GetAvatarActorFromActorInfo()->HasAuthority();
 	if (!bIsServer) return;
@@ -27,7 +27,7 @@ void UAuraProjectileSpell::SpawnProjectileSpell(const FVector& ProjectileTargetL
 		ProjectileClass,
 		SpawnTransform,
 		GetOwningActorFromActorInfo(),
-		Cast<APawn>(GetAvatarActorFromActorInfo()),
+		Cast<APawn>(GetOwningActorFromActorInfo()),
 		ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
 		
 	// Damage GameplayEffect Class 세팅 (SpecHandle 할당)
