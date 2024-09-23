@@ -86,6 +86,24 @@ void UAuraAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, 
 	}
 }
 
+void UAuraAttributeSet::ShowFloatingText(FEffectProperties Props, const float LocalIncomingDamage, bool bBlockedHit, bool bCriticalHit)
+{
+	// Show Floating DamageText Widget
+	if (Props.SourceCharacter != Props.TargetCharacter)
+	{
+		if (AAuraPlayerController* AuraPC = Cast<AAuraPlayerController>(Props.SourceController))
+		{
+			AuraPC->ClientShowDamageText(LocalIncomingDamage, Props.TargetCharacter, bBlockedHit, bCriticalHit);
+			return;
+		}
+		if (AAuraPlayerController* AuraPC = Cast<AAuraPlayerController>(Props.TargetController))
+		{
+			AuraPC->ClientShowDamageText(LocalIncomingDamage, Props.TargetCharacter, bBlockedHit, bCriticalHit);
+			return;
+		}
+	}
+}
+
 void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
 {
 	Super::PostGameplayEffectExecute(Data);
@@ -122,14 +140,9 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 					CombatInterface->Die();
 				}
 			}
-			
 			const bool bBlock = UAuraAbilitySystemLibrary::IsBlockedHit(Props.EffectContextHandle);
 			const bool bCritical = UAuraAbilitySystemLibrary::IsCriticalHit(Props.EffectContextHandle);
-			// Show Floating DamageText Widget
-			if (AAuraPlayerController* AuraPC = Cast<AAuraPlayerController>(Props.SourceController))
-			{
-				AuraPC->ClientShowDamageText(LocalIncomingDamage, Props.TargetCharacter, bBlock, bCritical);
-			}
+			ShowFloatingText(Props, LocalIncomingDamage, bBlock, bCritical);
 		}
 	}
 }
