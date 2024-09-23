@@ -54,7 +54,7 @@ void AAuraEnemy::BeginPlay()
 	InitAbilityActorInfo();
 	if (HasAuthority())
 	{
-		UAuraAbilitySystemLibrary::GetStartupAbilities(this, AbilitySystemComponent);
+		UAuraAbilitySystemLibrary::GetStartupAbilities(this, AbilitySystemComponent, CharacterClass);
 	}
 	
 	
