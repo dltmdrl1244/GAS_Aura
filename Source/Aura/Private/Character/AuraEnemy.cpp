@@ -46,6 +46,7 @@ void AAuraEnemy::PossessedBy(AController* NewController)
 	
 	const bool bRangedAttacker = CharacterClass == ECharacterClass::Elementalist || CharacterClass == ECharacterClass::Ranger;
 	AuraAIController->GetBlackboardComponent()->SetValueAsBool(FName("RangedAttacker"), bRangedAttacker);
+	AuraAIController->GetBlackboardComponent()->SetValueAsBool(FName("IsDead"), false);
 }
 
 void AAuraEnemy::BeginPlay()
@@ -136,6 +137,10 @@ int32 AAuraEnemy::GetCharacterLevel()
 void AAuraEnemy::Die()
 {
 	SetLifeSpan(LifeSpan);
+	if (AuraAIController)
+	{
+		AuraAIController->GetBlackboardComponent()->SetValueAsBool(FName("IsDead"), true);
+	}
 	Super::Die();
 }
 
