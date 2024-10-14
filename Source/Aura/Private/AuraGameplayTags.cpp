@@ -166,6 +166,14 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		);
 	
 	/*
+	* Meta Attributes
+	*/
+	GameplayTags.Attributes_Meta_IncomingXP = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Attributes.Meta.IncomingXP"),
+		FString("Incoming XP meta attribute")
+		);
+	
+	/*
 	* Map of Damage Types to Resistances
 	*/
 	GameplayTags.DamageTypeToResistance.Add(GameplayTags.Damage_Arcane, GameplayTags.Attributes_Resistance_Arcane);
