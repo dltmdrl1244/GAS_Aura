@@ -30,7 +30,7 @@ public:
 	/* End Enemy Interface */
 	
 	/* Combat Interface */
-	virtual int32 GetCharacterLevel() override;
+	virtual int32 GetCharacterLevel_Implementation() override;
 	virtual void Die() override;
 	/* End Combat Interface */
 
