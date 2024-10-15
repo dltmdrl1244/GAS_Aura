@@ -5,6 +5,7 @@
 #include "UI/Widget/AuraUserWidget.h"
 #include "UI/WidgetController/AttributeMenuWidgetController.h"
 #include "UI/WidgetController/OverlayWidgetController.h"
+#include "UI/WidgetController/SpellMenuWidgetController.h"
 
 /* 싱글톤 패턴과 같이, 하나의 WidgetController 클래스는 하나의 객체만을 가진다.
  * 만약 OverlayWidgetController가 nullptr라면 새로운 객체를 생성, 그렇지 않다면 그 컨트롤러 자체를 리턴.
@@ -31,6 +32,18 @@ UAttributeMenuWidgetController* AAuraHUD::GetAttributeMenuWidgetController(const
 	}
 	
 	return AttributeMenuWidgetController;
+}
+
+USpellMenuWidgetController* AAuraHUD::GetSpellMenuWidgetController(const FWidgetControllerParams& WCParams)
+{
+	if (SpellMenuWidgetController == nullptr)
+	{
+		SpellMenuWidgetController = NewObject<USpellMenuWidgetController>(this, SpellMenuWidgetControllerClass);
+		SpellMenuWidgetController->SetWidgetControllerParams(WCParams);
+		SpellMenuWidgetController->BindCallbacksToDependencies();
+	}
+	
+	return SpellMenuWidgetController;
 }
 
 // 데이터와 바인딩되어 있는 PlayerController를 얻고 (없다면 만들고), 뷰포트에 띄우는 것까지 수행

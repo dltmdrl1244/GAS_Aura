@@ -56,7 +56,7 @@ AAuraPlayerState* UAuraWidgetController::GetAuraPS()
 {
 	if (AuraPlayerState == nullptr)
 	{
-		AuraPlayerState = Cast<AAuraPlayerState>(AuraPlayerState);
+		AuraPlayerState = Cast<AAuraPlayerState>(PlayerState);
 	}
 	return AuraPlayerState;
 }
@@ -65,7 +65,7 @@ UAuraAbilitySystemComponent* UAuraWidgetController::GetAuraASC()
 {
 	if (AuraAbilitySystemComponent == nullptr)
 	{
-		AuraAbilitySystemComponent = Cast<UAuraAbilitySystemComponent>(AuraAbilitySystemComponent);
+		AuraAbilitySystemComponent = Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent);
 	}
 	return AuraAbilitySystemComponent;
 }
@@ -74,7 +74,7 @@ UAuraAttributeSet* UAuraWidgetController::GetAuraAS()
 {
 	if (AuraAttributeSet == nullptr)
 	{
-		AuraAttributeSet = Cast<UAuraAttributeSet>(AuraAttributeSet);
+		AuraAttributeSet = Cast<UAuraAttributeSet>(AttributeSet);
 	}
 	return AuraAttributeSet;
 }
