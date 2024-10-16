@@ -28,5 +28,7 @@ protected:
 	 
 	UFUNCTION(BlueprintPure)
 	FTaggedMontage GetRandomTaggedMontage(const TArray<FTaggedMontage>& TaggedMontages);
+
+	float GetDamageByDamageType(float InLevel, const FGameplayTag& DamageType);
 	
 };
