@@ -3,6 +3,7 @@
 
 #include "AbilitySystem/AbilityTask/TargetDataUnderCursor.h"
 #include "AbilitySystemComponent.h"
+#include "Aura/Aura.h"
 #include "Player/AuraPlayerController.h"
 
 UTargetDataUnderCursor* UTargetDataUnderCursor::CreateTargetDataUnderCursor(UGameplayAbility* OwningAbility)
@@ -38,11 +39,13 @@ void UTargetDataUnderCursor::SendCursorData()
 	// FScopedPredictionWindow ScopedPrediction(AbilitySystemComponent.Get());
 	
 	AAuraPlayerController* AuraPC = Cast<AAuraPlayerController>(Ability->GetCurrentActorInfo()->PlayerController.Get());
-	FGameplayAbilityTargetData_SingleTargetHit* Data = new FGameplayAbilityTargetData_SingleTargetHit();
-	Data->HitResult = AuraPC->GetCursorHit();
+	FHitResult CursorHit;
+	AuraPC->GetHitResultUnderCursor(ECC_Target, false, CursorHit);
 	
 	FGameplayAbilityTargetDataHandle DataHandle;
+	FGameplayAbilityTargetData_SingleTargetHit* Data = new FGameplayAbilityTargetData_SingleTargetHit();
 	DataHandle.Add(Data);
+	Data->HitResult = CursorHit;
 
 	// Target Data를 서버에 전달하는 ServerRPC
 	AbilitySystemComponent->ServerSetReplicatedTargetData(
