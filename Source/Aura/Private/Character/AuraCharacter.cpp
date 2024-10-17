@@ -164,7 +164,8 @@ void AAuraCharacter::InitAbilityActorInfo()
 	Cast<UAuraAbilitySystemComponent>(AuraPlayerState->GetAbilitySystemComponent())->AbilityActorInfoSet();
 	AbilitySystemComponent = AuraPlayerState->GetAbilitySystemComponent();
     AttributeSet = AuraPlayerState->GetAttributeSet();
-
+	OnASCRegistered.Broadcast(AbilitySystemComponent);
+	
 	// 이 캐릭터의 어트리뷰트와 바인딩될 overlay widget을 만들고, 뷰포트에 띄운다.
 	// 그 결과 각각의 캐릭터는 각각의 캐릭터에서 이 부분을 수행하고, 즉 자신의 캐릭터 상황에 맞는 overlay HUD를 갖게 된다.
 	if (AAuraPlayerController* AuraPlayerController = Cast<AAuraPlayerController>(GetController()))
