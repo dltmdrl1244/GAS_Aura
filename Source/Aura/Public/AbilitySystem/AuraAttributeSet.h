@@ -214,6 +214,9 @@ public:
 	void OnRep_Mana(const FGameplayAttributeData& OldMana) const;
 
 private:
+	void HandleIncomingDamage(const FEffectProperties& Props);
+	void HandleIncomingXP(const FEffectProperties& Props);
+	void Debuff(const FEffectProperties& Props);
 	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props) const;
 	void SendXPEvent(const FEffectProperties& Props);
 
