@@ -22,7 +22,8 @@ public:
 	AAuraCharacter();
 	virtual void PossessedBy(AController* NewController) override;
 	virtual void OnRep_PlayerState() override;
-
+	virtual void OnRep_IsStunned() override;
+	virtual void OnRep_IsBurned() override;
 
 	/* Player Interface */
 	virtual void AddToXP_Implementation(int32 InXP) override;
